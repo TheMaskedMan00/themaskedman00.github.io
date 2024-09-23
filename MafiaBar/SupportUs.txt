@@ -1,7 +1,7 @@
 <size=25>Wanna support us?</size=25>
 
-We don't have a Patreon Yet
-But you can support us directly via PayPal.
+patreon.com/Thekibblemeister
+
 
 By becoming a supporter,
 You can get the following Perks:
@@ -11,7 +11,7 @@ Buy a House ($25): Whitelist, 1 Free Custom Drink every 4 months you stay subscr
 Cheers! ($100): Custom Drink, A Poster Here (Permanent and free to change)
 <size=8>
 All Supporters will get their name on the supporter board forever!
-The ‘Cheers!’ Tier can be a one time purchase, or you can stay subscribed to it to get one free custom drink every month!
+The ‘Cheers!’ Tier Must be purchased from Kibble Directly, Contact him on Discord.
 <b><u><size=10>You can only have a maximum of 5 custom drinks<size=5></u> (for now)<size=8>
 All Tiers include the previous Tiers Benefits.</b>
 <i>If you are found to be abusing your whitelist powers, it may be taken away with no refund.</i>
