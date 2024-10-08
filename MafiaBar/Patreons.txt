@@ -10,4 +10,4 @@ FleetFenrirStar & RunaXR
 DaddyRedneck
 TacticalYumi|ShowBanner|
 CharlieMorningstar|ShowBanner|
-itsyagirlRose11
+itsyagirlRose11|ShowBanner|
