@@ -8,7 +8,8 @@ function FindProxyForURL(url, host) {
         "linkingbotvrchat.github.io",
 	"pastebin.com",
 	"idlecube-cryo.github.io",
-	"makimakicrab.github.io"
+	"makimakicrab.github.io",
+	"api.disbridge.com"
     ];
 
     // Proxy server address
