@@ -1,4 +1,4 @@
-//Patreons go here
+//Header
 <size=5>༒ŘûƁŸ ̪ĹĂŇĖ༒|ShowBanner|
 Jayden_G420|ShowBanner|
 zebratbone|ShowBanner|
@@ -70,3 +70,4 @@ MysticLuna|ShowBanner|
 AzuraSakura
 LiL_Gannon454
 90s_BADDI€
+//End
