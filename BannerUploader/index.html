@@ -1,0 +1,1089 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mafia Bar Banner Uploader</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #101112;
+      --panel: #1a1b1d;
+      --panel-strong: #232528;
+      --field: #121315;
+      --text: #f6f1eb;
+      --muted: #b9afa6;
+      --line: #34383d;
+      --accent: #d14d45;
+      --accent-strong: #ee6258;
+      --warn: #f0b84a;
+      --good: #67c587;
+      --bad: #ef6b6b;
+      --shadow: 0 18px 48px rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        linear-gradient(135deg, rgba(209, 77, 69, 0.12), transparent 32%),
+        linear-gradient(180deg, #17181a 0, var(--bg) 34rem);
+      color: var(--text);
+    }
+
+    main {
+      width: min(1220px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 32px 0;
+    }
+
+    header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 22px;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      line-height: 0.95;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      font-size: 1.05rem;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      font-size: 0.95rem;
+      letter-spacing: 0;
+    }
+
+    p {
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(26, 27, 29, 0.82);
+      color: var(--muted);
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    .status-pill.ready {
+      border-color: rgba(103, 197, 135, 0.45);
+      color: var(--good);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(26, 27, 29, 0.94);
+      box-shadow: var(--shadow);
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      background: var(--panel-strong);
+    }
+
+    .panel-body {
+      padding: 16px;
+    }
+
+    .settings {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .field.double {
+      grid-column: span 2;
+    }
+
+    label {
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    input,
+    select {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--field);
+      color: var(--text);
+      font: inherit;
+      padding: 0 11px;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(209, 77, 69, 0.18);
+    }
+
+    input[type="file"] {
+      padding: 9px 11px;
+    }
+
+    .list {
+      display: grid;
+      max-height: 62vh;
+      overflow: auto;
+    }
+
+    .patreon {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      min-height: 46px;
+      padding: 8px 10px;
+      border: 0;
+      border-bottom: 1px solid rgba(52, 56, 61, 0.72);
+      background: transparent;
+      color: var(--text);
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .patreon:hover {
+      background: #202226;
+    }
+
+    .patreon.selected {
+      background: rgba(209, 77, 69, 0.16);
+      box-shadow: inset 3px 0 0 var(--accent);
+    }
+
+    .patreon .name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 0 8px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.78rem;
+      white-space: nowrap;
+    }
+
+    .badge.banner {
+      border-color: rgba(103, 197, 135, 0.42);
+      color: var(--good);
+    }
+
+    .workspace {
+      display: grid;
+      gap: 18px;
+    }
+
+    .preview-grid {
+      display: grid;
+      grid-template-columns: minmax(220px, 360px) minmax(0, 1fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .poster {
+      display: grid;
+      place-items: center;
+      min-height: 360px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background:
+        linear-gradient(45deg, #24262a 25%, transparent 25%),
+        linear-gradient(-45deg, #24262a 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #24262a 75%),
+        linear-gradient(-45deg, transparent 75%, #24262a 75%),
+        #17181a;
+      background-position: 0 0, 0 12px, 12px -12px, -12px 0;
+      background-size: 24px 24px;
+    }
+
+    .poster img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      max-height: 520px;
+      object-fit: contain;
+    }
+
+    .empty {
+      color: var(--muted);
+      text-align: center;
+      padding: 24px;
+    }
+
+    .controls {
+      display: grid;
+      gap: 14px;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    button,
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 0 14px;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      background: var(--accent);
+      color: #fff;
+      font: inherit;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 150ms ease, border-color 150ms ease, transform 150ms ease;
+    }
+
+    button:hover,
+    .button:hover {
+      background: var(--accent-strong);
+      transform: translateY(-1px);
+    }
+
+    button.secondary {
+      border-color: var(--line);
+      background: #151618;
+      color: var(--text);
+    }
+
+    button.secondary:hover {
+      border-color: #5a6068;
+      background: #202328;
+    }
+
+    button.warn {
+      background: #8a5c14;
+    }
+
+    button.warn:hover {
+      background: #a97019;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.52;
+      transform: none;
+    }
+
+    .commit-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .commit-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 10px;
+      border: 1px solid rgba(52, 56, 61, 0.8);
+      border-radius: 6px;
+      background: #17181a;
+    }
+
+    .toast {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      max-width: calc(100% - 40px);
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #202328;
+      color: var(--text);
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .toast.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    dialog {
+      width: min(520px, calc(100% - 28px));
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      color: var(--text);
+      box-shadow: var(--shadow);
+      padding: 0;
+    }
+
+    dialog::backdrop {
+      background: rgba(0, 0, 0, 0.62);
+    }
+
+    .dialog-body {
+      display: grid;
+      gap: 12px;
+      padding: 18px;
+    }
+
+    .dialog-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      padding: 14px 18px;
+      border-top: 1px solid var(--line);
+      background: var(--panel-strong);
+    }
+
+    @media (max-width: 920px) {
+      header,
+      .layout,
+      .preview-grid,
+      .settings {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        align-items: flex-start;
+      }
+
+      .field.double {
+        grid-column: span 1;
+      }
+
+      .list {
+        max-height: 320px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <h1>Mafia Bar Banners</h1>
+        <p>Preview, reorder, rename, and publish patron banner files directly to the GitHub repo.</p>
+      </div>
+      <div class="status-pill" id="repoStatus">Not connected</div>
+    </header>
+
+    <section class="panel" aria-label="GitHub settings">
+      <div class="panel-head">
+        <h2>GitHub Target</h2>
+        <button class="secondary" type="button" id="saveSettings">Save Settings</button>
+      </div>
+      <div class="panel-body settings">
+        <div class="field">
+          <label for="ownerInput">Owner</label>
+          <input id="ownerInput" autocomplete="off" value="TheMaskedMan00">
+        </div>
+        <div class="field">
+          <label for="repoInput">Repo</label>
+          <input id="repoInput" autocomplete="off" value="themaskedman00.github.io">
+        </div>
+        <div class="field">
+          <label for="branchInput">Branch</label>
+          <input id="branchInput" autocomplete="off" value="Site">
+        </div>
+        <div class="field">
+          <label for="basePathInput">Image Folder</label>
+          <input id="basePathInput" autocomplete="off" value="MafiaBar">
+        </div>
+        <div class="field double">
+          <label for="tokenInput">GitHub Token</label>
+          <input id="tokenInput" type="password" autocomplete="off" placeholder="Fine-grained token with Contents read/write">
+        </div>
+        <div class="field">
+          <label for="startIndexInput">First Banner #</label>
+          <input id="startIndexInput" type="number" min="0" step="1" value="0">
+        </div>
+        <div class="field">
+          <label for="skipIndexInput">Skip Banner #</label>
+          <input id="skipIndexInput" type="number" min="0" step="1" value="4">
+        </div>
+      </div>
+    </section>
+
+    <div class="layout">
+      <aside class="panel">
+        <div class="panel-head">
+          <h2>Patrons</h2>
+          <button class="secondary" type="button" id="reloadBtn">Reload</button>
+        </div>
+        <div class="list" id="list" aria-label="Patron list"></div>
+      </aside>
+
+      <section class="workspace">
+        <section class="panel" aria-label="Selected patron">
+          <div class="panel-head">
+            <h2 id="selectedTitle">No Patron Selected</h2>
+            <span class="badge" id="bannerName">no banner</span>
+          </div>
+          <div class="panel-body preview-grid">
+            <div class="poster">
+              <img id="bannerPreview" src="" alt="">
+              <div class="empty" id="emptyPreview">Select a patron to preview their banner.</div>
+            </div>
+
+            <div class="controls">
+              <div class="field">
+                <label for="renameInput">Display Name</label>
+                <input id="renameInput" autocomplete="off" placeholder="Patron name">
+              </div>
+
+              <div class="button-row">
+                <button class="secondary" type="button" id="moveUp">Move Up</button>
+                <button class="secondary" type="button" id="moveDown">Move Down</button>
+                <button class="secondary" type="button" id="applyRename">Apply Name</button>
+              </div>
+
+              <div class="field">
+                <label for="uploadInput">Banner Image</label>
+                <input type="file" id="uploadInput" accept="image/*">
+              </div>
+
+              <div class="button-row">
+                <button type="button" id="stageBanner">Add / Change Banner</button>
+                <button class="warn" type="button" id="removeBanner">Remove Banner</button>
+              </div>
+
+              <div>
+                <h3>Pending Commit</h3>
+                <div class="commit-list" id="commitList"></div>
+              </div>
+
+              <div class="button-row">
+                <button type="button" id="publishBtn">Publish to GitHub</button>
+                <button class="secondary" type="button" id="downloadTxt">Download Patreons.txt</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+    </div>
+  </main>
+
+  <dialog id="confirmDialog">
+    <div class="dialog-body">
+      <h2 id="confirmTitle">Confirm</h2>
+      <p id="confirmMessage"></p>
+    </div>
+    <div class="dialog-actions">
+      <button class="secondary" type="button" id="cancelConfirm">Cancel</button>
+      <button type="button" id="acceptConfirm">Continue</button>
+    </div>
+  </dialog>
+
+  <div class="toast" role="status" aria-live="polite" id="toast"></div>
+
+  <script>
+    const defaults = {
+      owner: "TheMaskedMan00",
+      repo: "themaskedman00.github.io",
+      branch: "Site",
+      basePath: "MafiaBar",
+      startIndex: 0,
+      skipIndex: 4
+    };
+
+    const els = {
+      owner: document.getElementById("ownerInput"),
+      repo: document.getElementById("repoInput"),
+      branch: document.getElementById("branchInput"),
+      basePath: document.getElementById("basePathInput"),
+      token: document.getElementById("tokenInput"),
+      startIndex: document.getElementById("startIndexInput"),
+      skipIndex: document.getElementById("skipIndexInput"),
+      repoStatus: document.getElementById("repoStatus"),
+      list: document.getElementById("list"),
+      selectedTitle: document.getElementById("selectedTitle"),
+      bannerName: document.getElementById("bannerName"),
+      bannerPreview: document.getElementById("bannerPreview"),
+      emptyPreview: document.getElementById("emptyPreview"),
+      rename: document.getElementById("renameInput"),
+      upload: document.getElementById("uploadInput"),
+      commitList: document.getElementById("commitList"),
+      toast: document.getElementById("toast"),
+      dialog: document.getElementById("confirmDialog"),
+      confirmTitle: document.getElementById("confirmTitle"),
+      confirmMessage: document.getElementById("confirmMessage"),
+      cancelConfirm: document.getElementById("cancelConfirm"),
+      acceptConfirm: document.getElementById("acceptConfirm")
+    };
+
+    let patreons = [];
+    let selectedIndex = -1;
+    let pendingImages = new Map();
+    let toastTimer;
+    let confirmResolver;
+
+    function cleanPath(path) {
+      return path.replace(/^\/+|\/+$/g, "");
+    }
+
+    function settings() {
+      return {
+        owner: els.owner.value.trim(),
+        repo: els.repo.value.trim(),
+        branch: els.branch.value.trim(),
+        basePath: cleanPath(els.basePath.value.trim()),
+        token: els.token.value.trim(),
+        startIndex: Number.parseInt(els.startIndex.value, 10) || 0,
+        skipIndex: Number.parseInt(els.skipIndex.value, 10)
+      };
+    }
+
+    function apiUrl(path) {
+      const s = settings();
+      const encodedPath = path.split("/").map(encodeURIComponent).join("/");
+      return `https://api.github.com/repos/${encodeURIComponent(s.owner)}/${encodeURIComponent(s.repo)}/contents/${encodedPath}?ref=${encodeURIComponent(s.branch)}`;
+    }
+
+    function rawUrl(path) {
+      const s = settings();
+      const encodedPath = path.split("/").map(encodeURIComponent).join("/");
+      return `https://raw.githubusercontent.com/${encodeURIComponent(s.owner)}/${encodeURIComponent(s.repo)}/${encodeURIComponent(s.branch)}/${encodedPath}`;
+    }
+
+    function headers() {
+      const s = settings();
+      const out = {
+        "Accept": "application/vnd.github+json",
+        "X-GitHub-Api-Version": "2022-11-28"
+      };
+
+      if (s.token) {
+        out.Authorization = `Bearer ${s.token}`;
+      }
+
+      return out;
+    }
+
+    function showToast(message, isError = false) {
+      els.toast.textContent = message;
+      els.toast.style.borderColor = isError ? "rgba(239, 107, 107, 0.55)" : "";
+      els.toast.classList.add("visible");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => els.toast.classList.remove("visible"), 2200);
+    }
+
+    function askConfirm(title, message, acceptText = "Continue") {
+      els.confirmTitle.textContent = title;
+      els.confirmMessage.textContent = message;
+      els.acceptConfirm.textContent = acceptText;
+      els.dialog.showModal();
+
+      return new Promise((resolve) => {
+        confirmResolver = resolve;
+      });
+    }
+
+    els.cancelConfirm.addEventListener("click", () => {
+      els.dialog.close();
+      confirmResolver?.(false);
+    });
+
+    els.acceptConfirm.addEventListener("click", () => {
+      els.dialog.close();
+      confirmResolver?.(true);
+    });
+
+    function localStorageKey() {
+      return "mafiaBarBannerUploaderSettings";
+    }
+
+    function saveSettings() {
+      const s = settings();
+      localStorage.setItem(localStorageKey(), JSON.stringify({
+        owner: s.owner,
+        repo: s.repo,
+        branch: s.branch,
+        basePath: s.basePath,
+        startIndex: s.startIndex,
+        skipIndex: Number.isFinite(s.skipIndex) ? s.skipIndex : ""
+      }));
+      sessionStorage.setItem(`${localStorageKey()}:token`, s.token);
+      showToast("Settings saved for this browser");
+    }
+
+    function loadSavedSettings() {
+      const saved = JSON.parse(localStorage.getItem(localStorageKey()) || "{}");
+      els.owner.value = saved.owner || defaults.owner;
+      els.repo.value = saved.repo || defaults.repo;
+      els.branch.value = saved.branch || defaults.branch;
+      els.basePath.value = saved.basePath || defaults.basePath;
+      els.startIndex.value = saved.startIndex ?? defaults.startIndex;
+      els.skipIndex.value = saved.skipIndex ?? defaults.skipIndex;
+      els.token.value = sessionStorage.getItem(`${localStorageKey()}:token`) || "";
+    }
+
+    function bannerNumberForOrder(orderIndex) {
+      const s = settings();
+      let number = s.startIndex + orderIndex;
+      if (Number.isFinite(s.skipIndex) && number >= s.skipIndex) {
+        number += 1;
+      }
+      return number;
+    }
+
+    function bannerFileNameForPatron(index) {
+      if (index < 0 || !patreons[index]?.hasBanner) {
+        return null;
+      }
+
+      const bannerOrder = patreons.slice(0, index + 1).filter((p) => p.hasBanner).length - 1;
+      return `banner${bannerNumberForOrder(bannerOrder)}.png`;
+    }
+
+    function bannerPathForPatron(index) {
+      const fileName = bannerFileNameForPatron(index);
+      return fileName ? `${settings().basePath}/${fileName}` : null;
+    }
+
+    function buildPatreonsText() {
+      const lines = ["//Header"];
+      patreons.forEach((patron) => {
+        lines.push(`${patron.name}${patron.hasBanner ? "|ShowBanner|" : ""}`);
+      });
+      lines.push("//End");
+      return `${lines.join("\n")}\n`;
+    }
+
+    function parsePatreons(text) {
+      return text
+        .split(/\r?\n/)
+        .map((line) => line.trim())
+        .filter((line) => line && !line.startsWith("//"))
+        .map((line) => ({
+          name: line.replace("|ShowBanner|", ""),
+          hasBanner: line.includes("|ShowBanner|")
+        }));
+    }
+
+    async function fetchText(path) {
+      const res = await fetch(apiUrl(path), { headers: headers() });
+      if (!res.ok) {
+        throw new Error(`Could not load ${path}: ${res.status}`);
+      }
+      const json = await res.json();
+      return base64ToText(json.content);
+    }
+
+    async function getContentInfo(path) {
+      const res = await fetch(apiUrl(path), { headers: headers() });
+      if (res.status === 404) {
+        return null;
+      }
+      if (!res.ok) {
+        throw new Error(`Could not check ${path}: ${res.status}`);
+      }
+      return res.json();
+    }
+
+    async function putContent(path, contentBase64, message) {
+      const s = settings();
+      const existing = await getContentInfo(path);
+      const body = {
+        message,
+        content: contentBase64,
+        branch: s.branch
+      };
+
+      if (existing?.sha) {
+        body.sha = existing.sha;
+      }
+
+      const res = await fetch(apiUrl(path).replace(/\?ref=.*/, ""), {
+        method: "PUT",
+        headers: {
+          ...headers(),
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body)
+      });
+
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(`Could not publish ${path}: ${res.status} ${text}`);
+      }
+
+      return res.json();
+    }
+
+    function textToBase64(text) {
+      const bytes = new TextEncoder().encode(text);
+      let binary = "";
+      bytes.forEach((byte) => {
+        binary += String.fromCharCode(byte);
+      });
+      return btoa(binary);
+    }
+
+    function base64ToText(base64) {
+      const binary = atob(base64.replace(/\s/g, ""));
+      const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
+      return new TextDecoder().decode(bytes);
+    }
+
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result).split(",")[1]);
+        reader.onerror = () => reject(reader.error);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function renderList() {
+      els.list.innerHTML = "";
+
+      if (!patreons.length) {
+        const empty = document.createElement("div");
+        empty.className = "empty";
+        empty.textContent = "Load Patreons.txt to begin.";
+        els.list.appendChild(empty);
+        return;
+      }
+
+      patreons.forEach((patron, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = `patreon${index === selectedIndex ? " selected" : ""}`;
+        button.addEventListener("click", () => selectItem(index));
+
+        const name = document.createElement("span");
+        name.className = "name";
+        name.textContent = patron.name;
+        button.appendChild(name);
+
+        const badge = document.createElement("span");
+        badge.className = `badge${patron.hasBanner ? " banner" : ""}`;
+        badge.textContent = patron.hasBanner ? bannerFileNameForPatron(index) : "no banner";
+        button.appendChild(badge);
+
+        els.list.appendChild(button);
+      });
+    }
+
+    function selectItem(index) {
+      selectedIndex = index;
+      els.rename.value = patreons[index]?.name || "";
+      renderList();
+      updatePreview();
+      updateCommitList();
+    }
+
+    function updatePreview() {
+      const patron = patreons[selectedIndex];
+      const path = bannerPathForPatron(selectedIndex);
+
+      els.selectedTitle.textContent = patron?.name || "No Patron Selected";
+      els.bannerName.textContent = path ? path.split("/").pop() : "no banner";
+      els.bannerName.className = `badge${path ? " banner" : ""}`;
+      els.bannerPreview.removeAttribute("src");
+      els.bannerPreview.alt = "";
+      els.bannerPreview.style.display = "none";
+      els.emptyPreview.style.display = "block";
+
+      if (!patron) {
+        els.emptyPreview.textContent = "Select a patron to preview their banner.";
+        return;
+      }
+
+      if (!path) {
+        els.emptyPreview.textContent = "This patron does not have a banner enabled.";
+        return;
+      }
+
+      const pending = pendingImages.get(selectedIndex);
+      els.bannerPreview.src = pending ? URL.createObjectURL(pending) : `${rawUrl(path)}?v=${Date.now()}`;
+      els.bannerPreview.alt = `${patron.name} banner`;
+      els.bannerPreview.style.display = "block";
+      els.emptyPreview.style.display = "none";
+    }
+
+    function updateCommitList() {
+      const items = [];
+      if (patreons.length) {
+        items.push({ label: `${settings().basePath}/Patreons.txt`, value: "order/names" });
+      }
+
+      pendingImages.forEach((file, patronIndex) => {
+        const path = bannerPathForPatron(patronIndex);
+        if (file && path) {
+          items.push({ label: path, value: `${Math.round(file.size / 1024)} KB` });
+        }
+      });
+
+      els.commitList.innerHTML = "";
+      if (!items.length) {
+        const empty = document.createElement("div");
+        empty.textContent = "No loaded changes yet.";
+        els.commitList.appendChild(empty);
+        return;
+      }
+
+      items.forEach((item) => {
+        const row = document.createElement("div");
+        row.className = "commit-item";
+
+        const label = document.createElement("span");
+        label.textContent = item.label;
+        row.appendChild(label);
+
+        const value = document.createElement("span");
+        value.textContent = item.value;
+        row.appendChild(value);
+
+        els.commitList.appendChild(row);
+      });
+    }
+
+    async function loadPatreons() {
+      const s = settings();
+      if (!s.owner || !s.repo || !s.branch || !s.basePath) {
+        showToast("Fill in the GitHub target first", true);
+        return;
+      }
+
+      try {
+        els.repoStatus.textContent = "Loading...";
+        els.repoStatus.classList.remove("ready");
+        const text = await fetchText(`${s.basePath}/Patreons.txt`);
+        patreons = parsePatreons(text);
+        pendingImages.clear();
+        selectedIndex = patreons.length ? 0 : -1;
+        renderList();
+        if (selectedIndex >= 0) {
+          selectItem(selectedIndex);
+        } else {
+          updatePreview();
+          updateCommitList();
+        }
+        els.repoStatus.textContent = `${s.owner}/${s.repo}@${s.branch}`;
+        els.repoStatus.classList.add("ready");
+        showToast("Patreons loaded");
+      } catch (error) {
+        console.error(error);
+        els.repoStatus.textContent = "Load failed";
+        els.repoStatus.classList.remove("ready");
+        showToast(error.message, true);
+      }
+    }
+
+    function moveSelected(delta) {
+      const nextIndex = selectedIndex + delta;
+      if (selectedIndex < 0 || nextIndex < 0 || nextIndex >= patreons.length) {
+        return;
+      }
+
+      const currentPending = pendingImages.get(selectedIndex);
+      const nextPending = pendingImages.get(nextIndex);
+      [patreons[selectedIndex], patreons[nextIndex]] = [patreons[nextIndex], patreons[selectedIndex]];
+      pendingImages.delete(selectedIndex);
+      pendingImages.delete(nextIndex);
+      if (currentPending) {
+        pendingImages.set(nextIndex, currentPending);
+      }
+      if (nextPending) {
+        pendingImages.set(selectedIndex, nextPending);
+      }
+
+      selectedIndex = nextIndex;
+      renderList();
+      updatePreview();
+      updateCommitList();
+    }
+
+    async function stageBanner() {
+      if (selectedIndex < 0) {
+        showToast("Select a patron first", true);
+        return;
+      }
+
+      const file = els.upload.files[0];
+      if (!file) {
+        showToast("Choose an image first", true);
+        return;
+      }
+
+      patreons[selectedIndex].hasBanner = true;
+      pendingImages.set(selectedIndex, file);
+      renderList();
+      updatePreview();
+      updateCommitList();
+      showToast(`Staged ${bannerFileNameForPatron(selectedIndex)}`);
+    }
+
+    function removeBanner() {
+      if (selectedIndex < 0) {
+        return;
+      }
+
+      pendingImages.delete(selectedIndex);
+      patreons[selectedIndex].hasBanner = false;
+      renderList();
+      updatePreview();
+      updateCommitList();
+    }
+
+    async function publish() {
+      const s = settings();
+      if (!s.token) {
+        showToast("Paste a GitHub token before publishing", true);
+        return;
+      }
+
+      if (!patreons.length) {
+        showToast("Load Patreons.txt first", true);
+        return;
+      }
+
+      try {
+        const images = [];
+        pendingImages.forEach((file, patronIndex) => {
+          const path = bannerPathForPatron(patronIndex);
+          if (file && path) {
+            images.push({ file, path, patronIndex });
+          }
+        });
+
+        const existingImagePaths = [];
+        for (const image of images) {
+          const info = await getContentInfo(image.path);
+          if (info?.sha) {
+            existingImagePaths.push(image.path);
+          }
+        }
+
+        if (existingImagePaths.length) {
+          const ok = await askConfirm(
+            "Overwrite Existing Banner?",
+            `GitHub already has ${existingImagePaths.join(", ")}. Publishing will replace those image files.`,
+            "Overwrite"
+          );
+          if (!ok) {
+            showToast("Publish cancelled");
+            return;
+          }
+        }
+
+        const patronPath = `${s.basePath}/Patreons.txt`;
+        const text = buildPatreonsText();
+        await putContent(
+          patronPath,
+          textToBase64(text),
+          "Update Mafia Bar patron banner order"
+        );
+
+        for (const image of images) {
+          await putContent(
+            image.path,
+            await fileToBase64(image.file),
+            `Update ${image.path}`
+          );
+        }
+
+        pendingImages.clear();
+        renderList();
+        updatePreview();
+        updateCommitList();
+        showToast("Published to GitHub");
+      } catch (error) {
+        console.error(error);
+        showToast(error.message, true);
+      }
+    }
+
+    function downloadPatreons() {
+      const blob = new Blob([buildPatreonsText()], { type: "text/plain" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "Patreons.txt";
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    document.getElementById("saveSettings").addEventListener("click", saveSettings);
+    document.getElementById("reloadBtn").addEventListener("click", loadPatreons);
+    document.getElementById("moveUp").addEventListener("click", () => moveSelected(-1));
+    document.getElementById("moveDown").addEventListener("click", () => moveSelected(1));
+    document.getElementById("applyRename").addEventListener("click", () => {
+      if (selectedIndex >= 0) {
+        patreons[selectedIndex].name = els.rename.value.trim();
+        renderList();
+        updatePreview();
+        updateCommitList();
+      }
+    });
+    document.getElementById("stageBanner").addEventListener("click", stageBanner);
+    document.getElementById("removeBanner").addEventListener("click", removeBanner);
+    document.getElementById("publishBtn").addEventListener("click", publish);
+    document.getElementById("downloadTxt").addEventListener("click", downloadPatreons);
+
+    loadSavedSettings();
+    loadPatreons();
+  </script>
+</body>
+</html>
