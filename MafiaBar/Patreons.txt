@@ -1,5 +1,5 @@
 //Header
-<size=5>༒ŘûƁŸ ̪ĹĂŇĖ༒|ShowBanner|
+<size=4>༒ŘûƁŸ ̪ĹĂŇĖ༒|ShowBanner|
 Jayden_G420|ShowBanner|
 zebratbone|ShowBanner|
 coldhearted1000|ShowBanner|
@@ -73,8 +73,8 @@ LiL_Gannon454
 Gοat
 RetroClod
 JK-HuskofHollow
-XStarlight_batx
 Inferno-hell65|ShowBanner|
 Buttercup85RHEC
 GhoZtz21
+XStarlight_batx|ShowBanner|
 //End
