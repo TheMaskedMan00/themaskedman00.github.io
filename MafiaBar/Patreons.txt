@@ -78,4 +78,5 @@ GhoZtz21
 XStarlight_batx|ShowBanner|
 KING COOK
 Swordmaster6791|ShowBanner|
+Chaotic_pirate
 //End
