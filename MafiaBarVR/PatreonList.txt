@@ -62,9 +62,6 @@ spookyboo_
 AmazinAngel fe34
 // Begin New Whitelist \/
 {|EOF|}
-### TIER 1 ###
-StrawberryEɪɢʜᴛ
 ### TIER 2 ###
 BiggieCheese15
 Jay3409
-temporalAlter
