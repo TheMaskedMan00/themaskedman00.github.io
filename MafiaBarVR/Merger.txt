@@ -7,13 +7,15 @@ maydie
 Ball0
 Ballо
 Magii4
+DaddyRedneck
 OBSIDIAN-KING
 Clͥouͣdͫdee
 coldhearted1000
 ~Respawn~
 Astis Xenophis
 .Nether.
-{EOF|BEGIN_BLACKLIST}
+//Begin Blacklist \/
+{|EOF|}
 usr_aa4850a8-9daf-4fad-97ba-0e641ea74b13
 【Ayod】
 Lux Halcyon
@@ -47,7 +49,7 @@ changemate 88c4
 dxl is a gimp
 // High Pitch Audio spammers /\
 //legacy motion sickness list before we added the settings for it \/
-{EOF|BEGIN_MOTIONSICKNESS}
+{|EOF|}
 Andrxid18
 Mama-Flamez
 ღ JadedEyez ღ
@@ -58,4 +60,5 @@ ForsakenLullaby
 Ziggarad-fang2
 spookyboo_
 AmazinAngel fe34
-{EOF|BEGIN_NEW_WHITELIST}
+// Begin New Whitelist \/
+{|EOF|}
