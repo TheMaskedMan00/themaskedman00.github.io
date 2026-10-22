@@ -1,0 +1,53 @@
+name: Build Patreon List
+
+on:
+  push:
+    branches: [ "Site" ]
+    paths:
+      - 'MafiaBarVR/Merger.txt'
+      - 'MafiaBarVR/patrons.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Site branch
+        uses: actions/checkout@v4
+        with:
+          ref: Site
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build PatreonList.txt
+        shell: python
+        run: |
+          from pathlib import Path
+
+          directory = Path("MafiaBarVR")
+          merger = (directory / "Merger.txt").read_text(encoding="utf-8")
+          patrons = (directory / "patrons.txt").read_text(encoding="utf-8")
+
+          # Keep the last Merger entry and first patron on separate lines.
+          if merger and patrons and not merger.endswith("\n"):
+              merger += "\n"
+
+          (directory / "PatreonList.txt").write_text(
+              merger + patrons,
+              encoding="utf-8"
+          )
+
+      - name: Commit PatreonList.txt
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add MafiaBarVR/PatreonList.txt
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update Patreon list"
+            git push origin Site
+          fi
