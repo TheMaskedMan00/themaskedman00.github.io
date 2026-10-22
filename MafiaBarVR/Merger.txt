@@ -1,0 +1,61 @@
+//LegacyWhitelist
+TheMaskedMan00
+TheKibbleMeister
+BiggieCheese15
+Splitsoul
+maydie
+Ball0
+Ballо
+Magii4
+OBSIDIAN-KING
+Clͥouͣdͫdee
+coldhearted1000
+~Respawn~
+Astis Xenophis
+.Nether.
+{EOF|BEGIN_BLACKLIST}
+usr_aa4850a8-9daf-4fad-97ba-0e641ea74b13
+【Ayod】
+Lux Halcyon
+Dr Lux Memetic
+dexter1096 fb53
+·Ayod·
+°Ayod°
+//Three stupid hackers /\
+Derpibooru
+rimlord
+// more hacker /\
+Lսstfսӏӏ
+// crasher /\
+Cyberchimp2015
+// Ripper /\
+KitCat545
+// Hacker /\
+LifePastThePain
+// Hacker /\ kept putting nsfw on the image loaders
+fentgodnexxus
+killedmycat764
+ʏᴏᴍɪ ღ
+//lumarizle //<-- told them to stop
+brеaԁ
+Akiimoa ce23
+Heart-break
+// Hackers /\
+AnguishedCalend
+Void_X8761
+changemate 88c4
+dxl is a gimp
+// High Pitch Audio spammers /\
+//legacy motion sickness list before we added the settings for it \/
+{EOF|BEGIN_MOTIONSICKNESS}
+Andrxid18
+Mama-Flamez
+ღ JadedEyez ღ
+Jameskii
+Parzi
+reapertheshark
+ForsakenLullaby
+Ziggarad-fang2
+spookyboo_
+AmazinAngel fe34
+{EOF|BEGIN_NEW_WHITELIST}
