@@ -62,6 +62,8 @@ spookyboo_
 AmazinAngel fe34
 // Begin New Whitelist \/
 {|EOF|}
+### TIER 1 ###
+JACK“SNAKE“ALFORD
 ### TIER 2 ###
 BiggieCheese15
 Jay3409
