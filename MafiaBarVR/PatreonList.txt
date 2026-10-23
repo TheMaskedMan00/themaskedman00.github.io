@@ -64,6 +64,7 @@ AmazinAngel fe34
 {|EOF|}
 ### TIER 1 ###
 JACK“SNAKE“ALFORD
+Seanarc
 ### TIER 2 ###
 BiggieCheese15
 Blue890
