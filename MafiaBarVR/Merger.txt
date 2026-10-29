@@ -41,19 +41,25 @@ Skullkracker
 {|EndOfPosters|}
 <size=25>Wanna support us?</size=25>
 
-patreon.com/Thekibblemeister
-
+Go to MafiaBarVR.com
 
 By becoming a supporter,
-You can get the following Perks:
-<align="left"><size=10>
-Protection Money ($10): Bypass Bouncers
-Buy a House ($25): Whitelist, 1 Free Custom Drink every 4 months you stay subscribed
-Cheers! ($100): Custom Drink, A Poster Here (Permanent and free to change)
+You can get the following Perks:<size=8>
+[S] = Subscription, [OTP] = One Time Purchase
+<size=12>
+[S] Protection Money ($10):
+<size=8>Bypass Bouncers (If restrictions are off) & Patreon Bar Access.
+
+<size=12>[S] Buy a House ($25):<size=6>
+Same as Above + a free Custom Drink every 4 months subscribed. (Max of 5 Drinks)
+
+
+<size=12>[OTP] Cheers! ($100):
+<size=6>Custom Drink & infinite access to the Patreon Bar,
+Also comes with a Poster in the Game Room (Permanent and free to change)
 <size=8>
 All Supporters will get their name on the supporter board forever!
 The ‘Cheers!’ Tier Must be purchased from Kibble Directly, Contact him on Discord.
-<b><u><size=10>You can only have a maximum of 5 custom drinks<size=5></u> (for now)<size=8>
 All Tiers include the previous Tiers Benefits.</b>
 <i>If you are found to be abusing your whitelist powers, it may be taken away with no refund.</i>
 <size=20><align="center">DM 'thekibblemeister' or '.themaskedman00.' on
