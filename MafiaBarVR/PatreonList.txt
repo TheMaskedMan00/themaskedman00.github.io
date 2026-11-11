@@ -225,7 +225,6 @@ AmazinAngel fe34
 // Begin New Whitelist \/
 {|EOF|}
 ### TIER 1 ###
-JACK“SNAKE“ALFORD
 Seanarc
 XpointVR
 ### TIER 2 ###
