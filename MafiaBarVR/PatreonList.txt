@@ -224,6 +224,7 @@ AmazinAngel fe34
 // Begin New Whitelist \/
 {|EOF|}
 ### TIER 1 ###
+nerfwingdings
 Petalmeat
 Seanarc
 XpointVR
